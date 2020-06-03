@@ -85,8 +85,8 @@ class Editor extends React.Component {
       container: "#toolbar",
       handlers: {
         customButton: () => {
-          console.log("gwe");
-          this.customButton();
+          console.log("g pressed");
+          // this.customButton();
         },
       },
     },

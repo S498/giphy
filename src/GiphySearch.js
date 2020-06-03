@@ -4,10 +4,6 @@ import GifList from "./GifList";
 import giphy from "./api/giphy";
 
 const GiphySearch = (props) => {
-  // constructor() {
-  //   super();
-  //   this.state = { GifList: [], modalShow: false };
-  // }
   const [gifList, setGifList] = useState([]);
 
   const printTheResultForApp = async (query, limit) => {
@@ -20,16 +16,18 @@ const GiphySearch = (props) => {
         limit: limit,
       },
     });
-    // this.setState({ GifList: response.data.data });
     setGifList(response.data.data);
   };
-  // render() {
   return (
     <div>
       <SearchBar fun={printTheResultForApp} />
       <div>
         {gifList.length > 0 ? <p>Showing {gifList.length} GIF's</p> : null}
-        <GifList gifs={gifList} imgUrl={props.imgUrl} />
+        <GifList
+          gifs={gifList}
+          imgUrl={props.imgUrl}
+          showModal={props.showModal}
+        />
       </div>
     </div>
   );

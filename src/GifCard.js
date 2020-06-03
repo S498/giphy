@@ -34,14 +34,14 @@ const GifCard = (props) => {
         okText="Yes"
         onConfirm={(e) => {
           e.preventDefault();
-          console.log("url", url);
           props.imgUrl(url);
-          console.log("url2", url);
+          props.showModal(false);
         }}
         getPopupContainer={(trigger) => trigger.parentNode}
         onCancel={(e) => {
           e.preventDefault();
           console.log("cancel");
+          props.showModal(false);
         }}
       >
         <img ref={imageRef} src={url} className="image-list" alt="Gif" />

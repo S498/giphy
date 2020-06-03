@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import giphy from "./api/giphy";
 import GifList from "./GifList";
+import Editor from "./Quill";
 
 class App extends Component {
   constructor() {
@@ -26,6 +27,7 @@ class App extends Component {
   render() {
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
+        <Editor />
         <SearchBar fun={this.printTheResultForApp} />
         <div>
           {this.state.GifList.length > 0 ? (

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { Component, useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./GifList.css";
 import { Popconfirm } from "antd";
 import "antd/dist/antd.css";

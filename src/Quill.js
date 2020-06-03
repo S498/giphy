@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import GiphySearch from "./GiphySearch";
-import { Modal, Button } from "antd";
+import { Modal } from "antd";
 import "antd/dist/antd.css";
 
-const Editor = (props) => {
+const Editor = () => {
   const CustomButtom = () => <span onClick={() => setShowModal(true)}>G</span>;
 
   const CustomToolbar = () => (
@@ -37,7 +37,6 @@ const Editor = (props) => {
   Font.whitelist = ["arial", "comic-sans"];
   Quill.register(Font, true);
 
-  const [text, setText] = useState("");
   const [imgUrl, setImgUrl] = useState("");
 
   // var handleChange = () => {

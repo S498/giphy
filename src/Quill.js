@@ -1,125 +1,73 @@
 import React from "react";
-import ReactQuill from "react-quill";
+import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
+const CustomButtom = () => <span>G</span>;
+
+function customButton() {
+  console.log("G");
+}
+
+const CustomToolbar = () => (
+  <div id="toolbar">
+    <select className="ql-font" defaultValue="arial">
+      <option value="arial" selected>
+        Arial
+      </option>
+      <option value="courier-new">Courier New</option>
+    </select>
+    <select className="ql-size" defaultValue="small">
+      <option value="small">Size 2</option>
+      <option value="medium" selected>
+        Size 3
+      </option>
+      <option value="large">Size 4</option>
+    </select>
+    <select className="ql-align" />
+    <select className="ql-color" />
+    <button className="ql-customButton">
+      <CustomButtom />
+    </button>
+  </div>
+);
+
+const Size = Quill.import("formats/size");
+Size.whitelist = ["small", "medium", "large"];
+Quill.register(Size, true);
+
+const Font = Quill.import("formats/font");
+Font.whitelist = ["arial", "comic-sans"];
+Quill.register(Font, true);
+
 class Editor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { text: "" };
-    this.handleChange = this.handleChange.bind(this);
-  }
-  modules = {
-    toolbar: [
-      [{ header: [1, 2, false] }],
-      ["bold", "italic", "underline", "strike", "blockquote"],
-      [
-        { list: "ordered" },
-        { list: "bullet" },
-        { indent: "-1" },
-        { indent: "+1" },
-      ],
-      ["link", "image"],
-      ["clean"],
-    ],
+  state = { editorHtml: "" };
+
+  handleChange = (html) => {
+    this.setState({ editorHtml: html });
   };
-  handleChange(value) {
-    this.setState({ text: value });
-  }
+
+  static modules = {
+    toolbar: {
+      container: "#toolbar",
+      handlers: {
+        customButton: customButton,
+      },
+    },
+  };
 
   render() {
     return (
-      <ReactQuill
-        value={this.state.text}
-        onChange={this.handleChange}
-        modules={this.modules}
-      />
+      <div className="text-editor">
+        <CustomToolbar />
+        <ReactQuill
+          value={this.state.editorHtml}
+          onChange={this.handleChange}
+          placeholder={this.props.placeholder}
+          modules={Editor.modules}
+        />
+      </div>
     );
   }
 }
-
-// class Editor extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { editorHtml: "", theme: "snow" };
-//     this.handleChange = this.handleChange.bind(this);
-//   }
-
-//   handleChange(html) {
-//     this.setState({ editorHtml: html });
-//   }
-
-//   handleThemeChange(newTheme) {
-//     if (newTheme === "core") newTheme = null;
-//     this.setState({ theme: newTheme });
-//   }
-
-//   render() {
-//     return (
-//       <div>
-//         <ReactQuill
-//           theme={this.state.theme}
-//           onChange={this.handleChange}
-//           value={this.state.editorHtml}
-//           modules={Editor.modules}
-//           formats={Editor.formats}
-//           bounds={".app"}
-//           placeholder={this.props.placeholder}
-//         />
-//         <div className="themeSwitcher">
-//           <label>Theme </label>
-//           <select onChange={(e) => this.handleThemeChange(e.target.value)}>
-//             <option value="snow">Snow</option>
-//             <option value="bubble">Bubble</option>
-//             <option value="core">Core</option>
-//           </select>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// /*
-//  * Quill modules to attach to editor
-//  * See https://quilljs.com/docs/modules/ for complete options
-//  */
-// Editor.modules = {
-//   toolbar: [
-//     [{ header: "1" }, { header: "2" }, { font: [] }],
-//     [{ size: [] }],
-//     ["bold", "italic", "underline", "strike", "blockquote"],
-//     [
-//       { list: "ordered" },
-//       { list: "bullet" },
-//       { indent: "-1" },
-//       { indent: "+1" },
-//     ],
-//     ["link", "image", "video"],
-//     ["clean"],
-//   ],
-//   clipboard: {
-//     // toggle to add extra line breaks when pasting HTML:
-//     matchVisual: false,
-//   },
-// };
-// /*
-//  * Quill editor formats
-//  * See https://quilljs.com/docs/formats/
-//  */
-// Editor.formats = [
-//   "header",
-//   "font",
-//   "size",
-//   "bold",
-//   "italic",
-//   "underline",
-//   "strike",
-//   "blockquote",
-//   "list",
-//   "bullet",
-//   "indent",
-//   "link",
-//   "image",
-//   "video",
-// ];
 
 export default Editor;

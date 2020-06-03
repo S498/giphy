@@ -27,7 +27,11 @@ class App extends Component {
   render() {
     return (
       <div className="ui container" style={{ marginTop: "10px" }}>
+        <h1>Quill Text Editor</h1>
         <Editor />
+        <br />
+        <br />
+        <h1>Giphy Search</h1>
         <SearchBar fun={this.printTheResultForApp} />
         <div>
           {this.state.GifList.length > 0 ? (

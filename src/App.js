@@ -10,20 +10,16 @@ class App extends Component {
     this.state = { GifList: [] };
   }
 
-  printTheResultForApp = async (msg) => {
-    console.log(msg);
+  printTheResultForApp = async (query, limit) => {
+    console.log(query, limit);
 
     const response = await giphy.get("/gifs/search", {
       params: {
-        q: msg,
+        q: query,
         api_key: "f2HFAPLB9mqdgpVHFo7mfiGnQwVBiNiD",
-        limit: 18,
+        limit: limit,
       },
     });
-
-    // .then((response)=>{console.log(response)});
-
-    // console.log(response);
     this.setState({ GifList: response.data.data });
   };
 
@@ -32,6 +28,9 @@ class App extends Component {
       <div className="ui container" style={{ marginTop: "10px" }}>
         <SearchBar fun={this.printTheResultForApp} />
         <div>
+          {this.state.GifList.length > 0 ? (
+            <p>Showing {this.state.GifList.length} GIF's</p>
+          ) : null}
           <GifList gifs={this.state.GifList} />
         </div>
       </div>

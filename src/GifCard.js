@@ -24,8 +24,6 @@ class GifCard extends Component {
   };
 
   componentDidMount() {
-    // console.log(this.imageRef);
-    // console.log(this.imageRef.current.clientHeight);
     this.imageRef.current.addEventListener("load", this.correctRowHeights);
   }
 
@@ -34,7 +32,7 @@ class GifCard extends Component {
 
     return (
       <div style={{ gridRowEnd: `span ${this.state.noOfSpans}` }}>
-        <img ref={this.imageRef} src={url} className="image-list" />
+        <img ref={this.imageRef} src={url} className="image-list" alt="Gif" />
       </div>
     );
   }

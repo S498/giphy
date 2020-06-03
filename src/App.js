@@ -1,14 +1,44 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import SearchBar from "./SearchBar";
 import giphy from "./api/giphy";
 import GifList from "./GifList";
 import Editor from "./Quill";
+import { Modal, Button } from "react-bootstrap";
+import GiphySearch from "./GiphySearch";
+
+function MyVerticallyCenteredModal(props) {
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Giphy Search
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <h4>Centered Modal</h4>
+        <p>
+          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+          consectetur ac, vestibulum at eros.
+        </p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
 
 class App extends Component {
   constructor() {
     super();
 
-    this.state = { GifList: [] };
+    this.state = { GifList: [], modalShow: false };
   }
 
   printTheResultForApp = async (query, limit) => {
@@ -32,13 +62,7 @@ class App extends Component {
         <br />
         <br />
         <h1>Giphy Search</h1>
-        <SearchBar fun={this.printTheResultForApp} />
-        <div>
-          {this.state.GifList.length > 0 ? (
-            <p>Showing {this.state.GifList.length} GIF's</p>
-          ) : null}
-          <GifList gifs={this.state.GifList} />
-        </div>
+        <GiphySearch />
       </div>
     );
   }

@@ -11,8 +11,6 @@ class App extends Component {
   }
 
   printTheResultForApp = async (query, limit) => {
-    console.log(query, limit);
-
     const response = await giphy.get("/gifs/search", {
       params: {
         q: query,

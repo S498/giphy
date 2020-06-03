@@ -23,7 +23,7 @@ class SearchBar extends Component {
           <div className="field" style={{ alignItems: "center" }}>
             <label>Gif search</label>
             <Input
-              autoFocus
+              autoFocus={true}
               type="text"
               onChange={(e) => this.setState({ term: e.target.value })}
               style={{ margin: "10px" }}

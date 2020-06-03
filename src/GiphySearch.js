@@ -7,8 +7,6 @@ const GiphySearch = (props) => {
   const [gifList, setGifList] = useState([]);
 
   const printTheResultForApp = async (query, limit) => {
-    console.log(query, limit);
-
     const response = await giphy.get("/gifs/search", {
       params: {
         q: query,

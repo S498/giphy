@@ -3,7 +3,6 @@ import "./GifList.css";
 import GifCard from "./GifCard";
 
 const GifList = (props) => {
-  console.log(props.gifs);
   const ImageList = props.gifs.map((gif) => {
     return (
       <GifCard

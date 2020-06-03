@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import GiphySearch from "./GiphySearch";
-import { Modal } from "antd";
+import { Modal, Button } from "antd";
 import "antd/dist/antd.css";
 
 const Editor = () => {
-  const CustomButtom = () => <span onClick={() => setShowModal(true)}>G</span>;
+  const CustomButtom = () => (
+    <Button onClick={() => setShowModal(true)} type="link">
+      G
+    </Button>
+  );
 
   const CustomToolbar = () => (
     <div id="toolbar">
@@ -40,7 +44,6 @@ const Editor = () => {
   const [imgUrl, setImgUrl] = useState("");
 
   // var handleChange = () => {
-  //   console.log(imgUrl);
   //   setText({
   //     ops: [
   //       {
@@ -57,7 +60,6 @@ const Editor = () => {
       container: "#toolbar",
       handlers: {
         customButton: () => {
-          console.log("g pressed");
           setShowModal(true);
         },
       },
@@ -84,7 +86,6 @@ const Editor = () => {
         visible={showModal}
         onOk={(e) => {
           e.preventDefault();
-          console.log("ok");
         }}
         onCancel={(e) => {
           e.preventDefault();

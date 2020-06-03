@@ -40,7 +40,6 @@ const GifCard = (props) => {
         getPopupContainer={(trigger) => trigger.parentNode}
         onCancel={(e) => {
           e.preventDefault();
-          console.log("cancel");
           props.showModal(false);
         }}
       >

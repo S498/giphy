@@ -1,41 +1,53 @@
-import React, { Component } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { Component, useState, useEffect, useRef } from "react";
 import "./GifList.css";
+import { Popconfirm } from "antd";
+import "antd/dist/antd.css";
 
-class GifCard extends Component {
-  constructor() {
-    super();
+const GifCard = (props) => {
+  const imageRef = useRef();
+  const [noOfSpans, setNoOfSpans] = useState(0);
 
-    this.imageRef = React.createRef();
-    this.state = { noOfSpans: 0 };
-  }
+  useEffect(() => {
+    const { current } = imageRef;
+    const correctRowHeights = () => {
+      if (imageRef.current.clientHeight != null) {
+        const height = imageRef.current.clientHeight;
+        const spans = Math.ceil(height / 10);
+        setNoOfSpans(spans);
+      } else {
+        const height = 200;
+        const spans = Math.ceil(height / 10);
+        setNoOfSpans(spans);
+      }
+    };
+    current.addEventListener("load", correctRowHeights);
+  }, []);
 
-  correctRowHeights = () => {
-    if (this.imageRef.current.clientHeight != null) {
-      console.log(this.imageRef.current.clientHeight);
+  const { url } = props.image;
 
-      const height = this.imageRef.current.clientHeight;
-      const spans = Math.ceil(height / 10);
-      this.setState({ noOfSpans: spans });
-    } else {
-      const height = 200;
-      const spans = Math.ceil(height / 10);
-      this.setState({ noOfSpans: spans });
-    }
-  };
-
-  componentDidMount() {
-    this.imageRef.current.addEventListener("load", this.correctRowHeights);
-  }
-
-  render() {
-    const { url } = this.props.image;
-
-    return (
-      <div style={{ gridRowEnd: `span ${this.state.noOfSpans}` }}>
-        <img ref={this.imageRef} src={url} className="image-list" alt="Gif" />
-      </div>
-    );
-  }
-}
+  return (
+    <div style={{ gridRowEnd: `span ${noOfSpans}` }}>
+      <Popconfirm
+        title="Do you want to copy this image?"
+        cancelText="No"
+        okText="Yes"
+        onConfirm={(e) => {
+          e.preventDefault();
+          console.log("url", url);
+          props.imgUrl(url);
+          console.log("url2", url);
+        }}
+        getPopupContainer={(trigger) => trigger.parentNode}
+        onCancel={(e) => {
+          e.preventDefault();
+          console.log("cancel");
+        }}
+      >
+        <img ref={imageRef} src={url} className="image-list" alt="Gif" />
+      </Popconfirm>
+    </div>
+  );
+};
 
 export default GifCard;

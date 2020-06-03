@@ -1,34 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import GiphySearch from "./GiphySearch";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button } from "antd";
+import "antd/dist/antd.css";
 
 const CustomButtom = () => <span>G</span>;
-
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      scrollable={true}
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Modal heading
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <GiphySearch />
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
 
 const CustomToolbar = () => (
   <div id="toolbar">
@@ -45,8 +22,8 @@ const CustomToolbar = () => (
       </option>
       <option value="large">Size 4</option>
     </select>
-    <select className="ql-align" />
-    <select className="ql-color" />
+    <select className="ql-align" defaultValue="" />
+    <select className="ql-color" defaultValue="" />
     <button className="ql-customButton">
       <CustomButtom />
     </button>
@@ -61,55 +38,56 @@ const Font = Quill.import("formats/font");
 Font.whitelist = ["arial", "comic-sans"];
 Quill.register(Font, true);
 
-class Editor extends React.Component {
-  customButton(showModal) {
-    console.log("g");
-    // setState({ showModal: true });
-    // showModal = true;
+const Editor = (props) => {
+  const [editorHtml, setEditorHtml] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
+
+  function handleChange(html) {
+    setEditorHtml(html);
   }
-  constructor(props) {
-    super(props);
 
-    // this.setState = {
-    //   setModalShow: customButton,
-    // };
-  }
-  state = { editorHtml: "", showModal: false };
+  useEffect(() => {
+    console.log("imgUrl", imgUrl);
+  }, [imgUrl]);
 
-  handleChange = (html) => {
-    this.setState({ editorHtml: html });
-  };
-
-  static modules = {
+  var modules = {
     toolbar: {
       container: "#toolbar",
       handlers: {
         customButton: () => {
           console.log("g pressed");
-          // this.customButton();
+          setShowModal(true);
         },
       },
     },
   };
-
-  render() {
-    return (
-      <div className="text-editor">
-        <CustomToolbar />
-        <ReactQuill
-          value={this.state.editorHtml}
-          onChange={this.handleChange}
-          // placeholder={this.props.placeholder}
-          modules={Editor.modules}
-        />
-        {/* <Button onClick={() => this.setState({ showModal: true })}>Hell</Button> */}
-        <MyVerticallyCenteredModal
-          show={this.state.showModal}
-          onHide={() => this.setState({ showModal: false })}
-        />
-      </div>
-    );
-  }
-}
+  const [showModal, setShowModal] = useState(false);
+  return (
+    <div className="text-editor">
+      <CustomToolbar />
+      <ReactQuill
+        value={editorHtml}
+        onChange={handleChange}
+        modules={modules}
+      />
+      <Modal
+        title="Basic Modal"
+        visible={showModal}
+        onOk={(e) => {
+          e.preventDefault();
+          console.log("ok");
+        }}
+        onCancel={(e) => {
+          e.preventDefault();
+          setShowModal(false);
+        }}
+        width="80%"
+        centered
+      >
+        <GiphySearch imgUrl={setImgUrl} />
+      </Modal>
+    </div>
+  );
+};
 
 export default Editor;

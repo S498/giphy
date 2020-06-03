@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Input } from "antd";
 
 class SearchBar extends Component {
   constructor(props) {
@@ -21,7 +22,8 @@ class SearchBar extends Component {
         <form className="ui form" onSubmit={this.onFromSubmitted}>
           <div className="field" style={{ alignItems: "center" }}>
             <label>Gif search</label>
-            <input
+            <Input
+              autoFocus
               type="text"
               onChange={(e) => this.setState({ term: e.target.value })}
               style={{ margin: "10px" }}
@@ -38,6 +40,7 @@ class SearchBar extends Component {
             <select
               id="number"
               name="Number of Results"
+              defaultValue="18"
               onChange={(e) => this.setState({ limit: e.target.value })}
             >
               <option value="18">18</option>

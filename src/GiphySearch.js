@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import GifList from "./GifList";
 import giphy from "./api/giphy";
 
-class GiphySearch extends React.Component {
-  constructor() {
-    super();
+const GiphySearch = (props) => {
+  // constructor() {
+  //   super();
+  //   this.state = { GifList: [], modalShow: false };
+  // }
+  const [gifList, setGifList] = useState([]);
 
-    this.state = { GifList: [], modalShow: false };
-  }
-
-  printTheResultForApp = async (query, limit) => {
+  const printTheResultForApp = async (query, limit) => {
     console.log(query, limit);
 
     const response = await giphy.get("/gifs/search", {
@@ -20,21 +20,20 @@ class GiphySearch extends React.Component {
         limit: limit,
       },
     });
-    this.setState({ GifList: response.data.data });
+    // this.setState({ GifList: response.data.data });
+    setGifList(response.data.data);
   };
-  render() {
-    return (
+  // render() {
+  return (
+    <div>
+      <SearchBar fun={printTheResultForApp} />
       <div>
-        <SearchBar fun={this.printTheResultForApp} />
-        <div>
-          {this.state.GifList.length > 0 ? (
-            <p>Showing {this.state.GifList.length} GIF's</p>
-          ) : null}
-          <GifList gifs={this.state.GifList} />
-        </div>
+        {gifList.length > 0 ? <p>Showing {gifList.length} GIF's</p> : null}
+        <GifList gifs={gifList} imgUrl={props.imgUrl} />
       </div>
-    );
-  }
-}
+    </div>
+  );
+  // }
+};
 
 export default GiphySearch;

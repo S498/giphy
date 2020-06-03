@@ -1,11 +1,13 @@
 import React from "react";
 import "./GifList.css";
-import ImageCard from "./GifCard";
+import GifCard from "./GifCard";
 
 const GifList = (props) => {
   console.log(props.gifs);
   const ImageList = props.gifs.map((gif) => {
-    return <ImageCard key={gif.id} image={gif.images.original} />;
+    return (
+      <GifCard key={gif.id} image={gif.images.original} imgUrl={props.imgUrl} />
+    );
   });
   return <div className="image-list">{ImageList}</div>;
 };

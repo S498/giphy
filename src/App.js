@@ -1,38 +1,7 @@
-import React, { Component, useState } from "react";
-import SearchBar from "./SearchBar";
+import React, { Component } from "react";
 import giphy from "./api/giphy";
-import GifList from "./GifList";
 import Editor from "./Quill";
-import { Modal, Button } from "react-bootstrap";
 import GiphySearch from "./GiphySearch";
-
-function MyVerticallyCenteredModal(props) {
-  return (
-    <Modal
-      {...props}
-      size="lg"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">
-          Giphy Search
-        </Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
-      </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Close</Button>
-      </Modal.Footer>
-    </Modal>
-  );
-}
 
 class App extends Component {
   constructor() {
@@ -59,10 +28,6 @@ class App extends Component {
       <div className="ui container" style={{ marginTop: "10px" }}>
         <h1>Quill Text Editor</h1>
         <Editor />
-        <br />
-        <br />
-        <h1>Giphy Search</h1>
-        <GiphySearch />
       </div>
     );
   }
